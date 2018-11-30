@@ -4,13 +4,12 @@ import time
 from fermat import primo_fermat
 from pascal import primo_pascal
 
-def gerador_numeros(i, j):
-    inicio = 2 ** i
-    fim = 2 ** j
-    i = inicio
-    while ( i < fim ):
-        yield i
-        i+=1
+def leitor_numero(quantidade_digitos):
+    nome_arquivo = str(quantidade_digitos) + '_digitos.txt'
+    with open(nome_arquivo) as arquivo:
+        for numero in arquivo:
+            yield int(numero)
+    
 
 def teste_pascal(numero, resultado, tempo_total=0.0):
     tempo_inicio = time.perf_counter()
@@ -18,9 +17,9 @@ def teste_pascal(numero, resultado, tempo_total=0.0):
     tempo_fim = time.perf_counter()
     tempo_total = tempo_fim - tempo_inicio
 
-def teste_fermat(numero, resultado, tempo_total=0.0, confianca=0.05):
+def teste_fermat(numero, resultado, tempo_total=0.0):
     tempo_inicio = time.perf_counter()
-    resultado = primo_fermat(numero, confianca=confianca)
+    resultado = primo_fermat(numero)
     tempo_fim = time.perf_counter()
     tempo_total = tempo_fim - tempo_inicio
 
@@ -35,20 +34,18 @@ def teste_pascal_fermat():
     resultado_pascal = False
     
     quantidade_erros = 0
-
-    i = int(sys.argv[1])
-    j = int(sys.argv[2])
-    confianca = float(sys.argv[3])
+    
+    numero_digitos = int(sys.argv[1])
 
     quantidade_testes = 0
 
-    for numero in gerador_numeros(i,j):
+    for numero in leitor_numero(numero_digitos):
         # PASCAL
         teste_pascal(numero, resultado_pascal, tempo_unitario_pascal)
         tempo_total_teste_pascal += tempo_unitario_pascal
 
         # FERMAT
-        teste_fermat(numero, resultado_fermat, tempo_unitario_fermat, confianca=confianca)
+        teste_fermat(numero, resultado_fermat, tempo_unitario_fermat)
         tempo_total_teste_fermat += tempo_unitario_fermat
 
         if ( resultado_fermat != resultado_pascal ):
