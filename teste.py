@@ -1,8 +1,14 @@
 import sys
 import time
+import math
 
 from fermat import primo_fermat
 from pascal import primo_pascal
+from rsa import gerando_chaves_rsa
+from rsa import encontrar_modulo_inverso
+from rsa import criptografar
+from rsa import decriptografar
+
 
 def leitor_numero(quantidade_digitos):
     nome_arquivo = str(quantidade_digitos) + '_digitos.txt'
@@ -70,3 +76,38 @@ def teste_pascal_fermat():
     print('>> Quantidade testes: ', quantidade_testes)
     print('>> Tempo medio      : ', tempo_medio_fermat)
     print('>> Taxa media erros : ', taxa_media_erros_fermat)
+
+def teste_forca_bruta_rsa(mensagem_criptografada, chave_publica):
+    n = chave_publica[0]
+    e = chave_publica[1]
+    p = int(math.ceil(math.sqrt(n)))
+    if ( p % 2 == 0):
+        p = p - 1
+    while(True):
+        if ( n % p == 0):
+            break
+        p -= 2
+    q = n // p
+    d = encontrar_modulo_inverso(e, (p-1)*(q-1))
+    return d
+
+
+def teste_rsa(tamanho_chave=512):
+    (chave_publica, chave_privada) = gerando_chaves_rsa(tamanho_chave=tamanho_chave)
+    mensagem = int(input('Entre com um numero: '))
+    print('Chave publica (n,e)     : ', chave_publica)
+
+    mensagem_criptografada = criptografar(mensagem, chave_publica)
+    print('Mensagem criptografada  : ', mensagem_criptografada)
+    # mensagem_decriptografada = decriptografar(mensagem_criptografada, chave_privada)
+    # print('Mensagem decriptografada: ', mensagem_decriptografada)
+
+    print('Encontrando chave privada pela forca bruta...')
+    d = teste_forca_bruta_rsa(mensagem, chave_publica)
+    chave_privada = (chave_publica[0], d)
+    mensagem_decriptografada = decriptografar(mensagem_criptografada, chave_privada)
+    print('Mensagem decriptografada: ', mensagem_decriptografada)
+    
+
+    
+
