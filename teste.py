@@ -17,7 +17,10 @@ def leitor_numero(quantidade_digitos):
             yield int(numero)
     
 
-def teste_pascal(numero, resultado, tempo_total=0.0):
+def teste_pascal(numero):
+    resultado  =False
+    tempo_total=0.0
+
     tempo_inicio = time.perf_counter()
     print('PASCAL: Tempo inicio ',tempo_inicio)
     resultado = primo_pascal(numero)
@@ -27,7 +30,12 @@ def teste_pascal(numero, resultado, tempo_total=0.0):
     print('PASCAL: Tempo total ',tempo_total)
     print('PASCAL: RESULTADO ', resultado)
 
-def teste_fermat(numero, resultado, tempo_total=0.0):
+    return resultado, tempo_total
+
+def teste_fermat(numero):
+    resultado  =False
+    tempo_total=0.0
+
     tempo_inicio = time.perf_counter()
     print('FERMAT: Tempo inicio ',tempo_inicio)
     resultado = primo_fermat(numero)
@@ -36,6 +44,8 @@ def teste_fermat(numero, resultado, tempo_total=0.0):
     tempo_total = tempo_fim - tempo_inicio
     print('FERMAT: Tempo total',tempo_total)
     print('FERMAT: RESULTADO ', resultado)
+
+    return resultado, tempo_total
 
 def teste_pascal_fermat():
     tempo_total_teste_pascal = 0.0
@@ -55,18 +65,18 @@ def teste_pascal_fermat():
 
     for numero in leitor_numero(numero_digitos):
         # PASCAL
-        teste_pascal(numero, resultado_pascal, tempo_unitario_pascal)
+        resultado_pascal, tempo_unitario_pascal = teste_pascal(numero)
         tempo_total_teste_pascal += tempo_unitario_pascal
 
         # FERMAT
-        teste_fermat(numero, resultado_fermat, tempo_unitario_fermat)
+        resultado_fermat, tempo_unitario_fermat = teste_fermat(numero)
         tempo_total_teste_fermat += tempo_unitario_fermat
 
         if ( resultado_fermat != resultado_pascal ):
             quantidade_erros +=1
 
         quantidade_testes +=1
-        
+        print()
         print('>> Teste: ', quantidade_testes)
         print('>> Numero: ', numero)        
         print('> PASCAL')
