@@ -54,8 +54,11 @@ def teste_pascal_fermat():
     numero_digitos = int(sys.argv[1])
 
     quantidade_testes = 0
-
+    
+    numeros_certos = []
+    numeros_errados = []
     for numero in leitor_numero(numero_digitos):
+        
         # PASCAL
         resultado_pascal, tempo_unitario_pascal = teste_pascal(numero)
         tempo_total_teste_pascal += tempo_unitario_pascal
@@ -66,6 +69,10 @@ def teste_pascal_fermat():
 
         if ( resultado_fermat != resultado_pascal ):
             quantidade_erros +=1
+            numeros_errados.append(numero)
+        else:
+            numeros_certos.append(numero)
+        
 
         quantidade_testes +=1
         print()
@@ -77,10 +84,13 @@ def teste_pascal_fermat():
         print('>> Result: ', resultado_fermat)
         print()
     
+    
     tempo_medio_pascal = tempo_total_teste_pascal / quantidade_testes
     tempo_medio_fermat = tempo_total_teste_fermat / quantidade_testes
     taxa_media_erros_fermat = quantidade_erros / quantidade_testes
 
+    print('Numeros certos      : ', numeros_certos)
+    print('Numeros errados     : ', numeros_errados)
     print('> PASCAL')
     print('>> Tempo total      : ', tempo_total_teste_pascal)
     print('>> Quantidade testes: ', quantidade_testes)
@@ -93,6 +103,8 @@ def teste_pascal_fermat():
     print('>> Quantidade testes: ', quantidade_testes)
     print('>> Tempo medio      : ', tempo_medio_fermat)
     print('>> Taxa media erros : ', taxa_media_erros_fermat)
+    
+    
 
 def teste_forca_bruta_rsa(mensagem_criptografada, chave_publica):
     n = chave_publica[0]
