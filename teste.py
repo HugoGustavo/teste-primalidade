@@ -59,6 +59,13 @@ def teste_pascal_fermat():
 
         quantidade_testes +=1
         
+        print('>> Teste: ', quantidade_testes)
+        print('>> Numero: ', numero)        
+        print('> PASCAL')
+        print('>> Result: ', resultado_pascal)
+        print('> FERMAT')
+        print('>> Result: ', resultado_fermat)
+        print()
     
     tempo_medio_pascal = tempo_total_teste_pascal / quantidade_testes
     tempo_medio_fermat = tempo_total_teste_fermat / quantidade_testes
