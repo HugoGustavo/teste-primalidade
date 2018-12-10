@@ -25,6 +25,7 @@ def teste_pascal(numero, resultado, tempo_total=0.0):
     print('PASCAL: Tempo final ',tempo_fim)
     tempo_total = tempo_fim - tempo_inicio
     print('PASCAL: Tempo total ',tempo_total)
+    print('PASCAL: RESULTADO ', resultado)
 
 def teste_fermat(numero, resultado, tempo_total=0.0):
     tempo_inicio = time.perf_counter()
@@ -34,6 +35,7 @@ def teste_fermat(numero, resultado, tempo_total=0.0):
     print('FERMAT: Tempo fim ',tempo_fim)
     tempo_total = tempo_fim - tempo_inicio
     print('FERMAT: Tempo total',tempo_total)
+    print('FERMAT: RESULTADO ', resultado)
 
 def teste_pascal_fermat():
     tempo_total_teste_pascal = 0.0
